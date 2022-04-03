@@ -1,6 +1,7 @@
 #include "main.h"
 #include "draw.h"
 #include "gba.h"
+#include "logic.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -34,11 +35,17 @@ int main(void) {
   // Load initial application state
   enum gba_state state = START;
 
+  // Create player struct
+  PLAYER player;
+
   while (1) {
     currentButtons = BUTTONS; // Load the current state of the buttons
 
     // TODO:
     // IMPL if pressing SELECT button, return to START
+    if (KEY_DOWN(BUTTON_SELECT, currentButtons)) {
+      state = START;
+    }
     switch (state) {
       case START:
         waitForVBlank();
@@ -46,10 +53,18 @@ int main(void) {
         state = TITLE; // go to title screen after startup
         break;
       case TITLE:
-        // TODO: if press start -> go to PLAY
+        // if press anykey -> go to PLAY
+        if (KEY_JUST_PRESSED(ANY_KEY, currentButtons, previousButtons)) {
+          state = INIT_PLAY;
+        }
         break;
       case INIT_PLAY: // we have these init states to prevent tearing
         // TODO: Set up play screen and then go to PLAY
+        waitForVBlank();
+        drawGameBackground();
+        waitForVBlank();
+        drawInitPlayer();
+        state = PLAY;
         break;
       case PLAY:
         /**

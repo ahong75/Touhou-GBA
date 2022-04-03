@@ -9,6 +9,7 @@ Create player struct
 Create enemy struct
 Create bullet struct
 **/
+
 /*
 * For example, for a Snake game, one could be:
 *
