@@ -3,12 +3,13 @@
 #include "logic.h"
 
 #include "images/title.h"
+#include "images/player.h"
 void drawTitleScreen(void) {
 	drawFullScreenImageDMA(title);
 }
 
 void drawGameBackground(void) {
-	// TODO: Implement this
+	fillScreenDMA(BLUE);
 	return;
 }
 
@@ -18,15 +19,17 @@ void drawLoseScreen(void) {
 }
 
 void drawInitPlayer(void) {
-	// TODO: Implement this
+	drawImageDMA(50, 50, PLAYER_WIDTH, PLAYER_HEIGHT, player);
 }
 
-bool updatePlayer(void) {
+int updatePlayer(void) {
 	// TODO: Implement this
+	return 0;
 }
 
-bool updateBullets(void) {
+int updateBullets(void) {
 	// TODO: Implement this
+	return 0;
 }
 
 void updateScore(void) {

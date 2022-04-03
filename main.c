@@ -25,7 +25,6 @@ enum gba_state {
 };
 
 int main(void) {
-  /* TODO: */
   // Manipulate REG_DISPCNT here to set Mode 3. //
   REG_DISPCNT = 0x403;
   // Save current and previous state of button input.
@@ -36,13 +35,11 @@ int main(void) {
   enum gba_state state = START;
 
   // Create player struct
-  PLAYER player;
+  // PLAYER player;
 
   while (1) {
     currentButtons = BUTTONS; // Load the current state of the buttons
 
-    // TODO:
-    // IMPL if pressing SELECT button, return to START
     if (KEY_DOWN(BUTTON_SELECT, currentButtons)) {
       state = START;
     }
@@ -59,7 +56,7 @@ int main(void) {
         }
         break;
       case INIT_PLAY: // we have these init states to prevent tearing
-        // TODO: Set up play screen and then go to PLAY
+        // Set up play screen and then go to PLAY
         waitForVBlank();
         drawGameBackground();
         waitForVBlank();

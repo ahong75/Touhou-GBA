@@ -24,7 +24,7 @@ static int qran(void) {
 int randint(int min, int max) { return (qran() * (max - min) >> 15) + min; }
 
 void setPixel(int row, int col, u16 color) {
-  videoBuffer[OFFSET(row, col, WIDTH)] = color; // equivalent to *(videoBuffer + OFFSET() = color), setting the pointer's value
+  videoBuffer[OFFSET(row, col, WIDTH)] = color; // equivalent to *(videoBuffer + OFFSET()) = color, setting the pointer's value
 }
 
 void drawRectDMA(int row, int col, int width, int height, volatile u16 color) {
@@ -49,10 +49,10 @@ void drawFullScreenImageDMA(const u16 *image) {
 // Nearly identical to the logic of drawRectDMA
 void drawImageDMA(int row, int col, int width, int height, const u16 *image) {
   DMA[DMA_CHANNEL_3].cnt = 0; // prevent DMA from drawing before we set up src and dst 
-  DMA[DMA_CHANNEL_3].src = image;
   for (int i = 0; i < height; i++) {
+    DMA[DMA_CHANNEL_3].src = &image[i * width];
     DMA[DMA_CHANNEL_3].dst = &videoBuffer[OFFSET(row + i, col, WIDTH)];
-    DMA[DMA_CHANNEL_3].cnt = width | DMA_SOURCE_FIXED | DMA_DESTINATION_INCREMENT | DMA_ON;
+    DMA[DMA_CHANNEL_3].cnt = width | DMA_SOURCE_INCREMENT | DMA_DESTINATION_INCREMENT | DMA_ON;
   }
 }
 
