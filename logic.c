@@ -14,7 +14,7 @@ void initPlayer(void) {
 void initBoss(void) {
 	// TODO: Add in boss initalization animation
 	boss1.x = WIDTH / 2;
-	boss1.y = HEIGHT / 8;
+	boss1.y = HEIGHT / 10;
 	boss1.velocity = 1;
 	updateBoss(boss1.x, boss1.y, -1, -1);
 }
@@ -41,9 +41,23 @@ void moveSprites(void) {
 	}
 	updatePlayer(player1.x, player1.y, oldx, oldy);
 
-	
+	int bossMove = randint(0, 3);
+	oldx = boss1.x;
+	switch (bossMove) {
+		case 0:
+			break;
+		case 1:
+			boss1.x = (boss1.x + boss1.velocity) % WIDTH;
+			updateBoss(boss1.x, boss1.y, oldx, boss1.y);
+			break;
+		case 2:
+			boss1.x = (boss1.x - boss1.velocity) % WIDTH;
+			updateBoss(boss1.x, boss1.y, oldx, boss1.y);
+			break;
+	}
 }
 
-void updateBullets(void) {
-
+int updateBullets(void) {
+	// TODO: Implement this
+	return 0;
 }

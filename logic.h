@@ -27,6 +27,6 @@ typedef struct boss {
 void initPlayer(void);
 void initBoss(void);
 void moveSprites(void);
-void updateBullets(void); // Initalizes and moves bullets
+int updateBullets(void); // Initalizes and moves bullets
 
 #endif
