@@ -19,7 +19,7 @@ void drawLoseScreen(void) {
 }
 
 void drawInitPlayer(void) {
-	drawImageDMA(50, 50, PLAYER_WIDTH, PLAYER_HEIGHT, player);
+	drawImageDMA(70, 100, PLAYER_WIDTH, PLAYER_HEIGHT, player);
 }
 
 int updatePlayer(void) {

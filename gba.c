@@ -34,7 +34,7 @@ void drawRectDMA(int row, int col, int width, int height, volatile u16 color) {
   DMA[DMA_CHANNEL_3].src = (const void *) &color; // color holds the address of the color we want, which is why it's volatile bc the compiler might never initalize the variable otherwise
   for (int i = 0; i < height; i++) { 
     // & is needed in the below expression because videoBuffer alone means a pointer, videoBuffer[x] is equivalent to *(videoBuffer + x) which is a value
-    DMA[DMA_CHANNEL_3].dst = &videoBuffer[OFFSET(row + i, col, WIDTH)]; // filling in the current row
+    DMA[DMA_CHANNEL_3].dst = &videoBuffer[OFFSET(col + i, row, WIDTH)];
     DMA[DMA_CHANNEL_3].cnt = width | DMA_SOURCE_FIXED | DMA_DESTINATION_INCREMENT | DMA_ON; // ORing a bunch of things we want for the control regsiter
   }
 }
@@ -51,7 +51,7 @@ void drawImageDMA(int row, int col, int width, int height, const u16 *image) {
   DMA[DMA_CHANNEL_3].cnt = 0; // prevent DMA from drawing before we set up src and dst 
   for (int i = 0; i < height; i++) {
     DMA[DMA_CHANNEL_3].src = &image[i * width];
-    DMA[DMA_CHANNEL_3].dst = &videoBuffer[OFFSET(row + i, col, WIDTH)];
+    DMA[DMA_CHANNEL_3].dst = &videoBuffer[OFFSET(col + i, row, WIDTH)];
     DMA[DMA_CHANNEL_3].cnt = width | DMA_SOURCE_INCREMENT | DMA_DESTINATION_INCREMENT | DMA_ON;
   }
 }
