@@ -12,11 +12,11 @@ void drawLoseScreen(void);
 // Updates the number shown on the screen representing score
 void updateScore(void);
 
-// Draws the player when they're first initialized
-void drawInitPlayer(void);
-
 // Updates the player/bullets and checks if they have collided with a bullet
-int updatePlayer(void);
+int updatePlayer(int nrow, int ncol, int orow, int ocol);
+
+// Updates the boss
+int updateBoss(int nrow, int ncol, int orow, int ocol);
 
 // Update the bullets and checks if they have collided with the player
 int updateBullets(void);

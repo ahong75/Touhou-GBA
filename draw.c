@@ -18,12 +18,19 @@ void drawLoseScreen(void) {
 	return;
 }
 
-void drawInitPlayer(void) {
-	drawImageDMA(70, 100, PLAYER_WIDTH, PLAYER_HEIGHT, player);
+int updatePlayer(int nrow, int ncol, int orow, int ocol) {
+	if (orow != -1) {
+		drawRectDMA(orow, ocol, PWIDTH, PHEIGHT, BLUE);
+	}
+	drawImageDMA(nrow, ncol, PWIDTH, PHEIGHT, player);
+	return 0;
 }
 
-int updatePlayer(void) {
-	// TODO: Implement this
+int updateBoss(int nrow, int ncol, int orow, int ocol) {
+	if (orow != -1) {
+		drawRectDMA(orow, ocol, BWIDTH, BHEIGHT, BLUE);
+	}
+	drawImageDMA(nrow, ncol, BWIDTH, BHEIGHT, boss);
 	return 0;
 }
 

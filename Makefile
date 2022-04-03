@@ -14,7 +14,7 @@ PROGNAME = App
 # that will be compiled into your program. For example
 # if you have main.c and myLib.c then in the following
 # line you would put main.o and myLib.o
-OFILES = gba.o font.o main.o images/garbage.o images/title.o images/player.o draw.o 
+OFILES = gba.o font.o main.o images/garbage.o images/title.o images/player.o draw.o logic.o
 
 ################################################################################
 # These are various settings used to make the GBA toolchain work

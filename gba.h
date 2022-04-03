@@ -54,6 +54,7 @@ extern volatile unsigned short *videoBuffer;
 #define BUTTON_R        (1<<8)
 #define BUTTON_L        (1<<9)
 #define ANY_KEY			((1<<10) - 1)
+#define MOVEMENT_KEY    ((ANY_KEY)^((1<<4) - 1)^(1<<8)^(1<<9))
 #define BUTTONS (*(volatile u32 *) 0x4000130)
 #define KEY_DOWN(key, buttons) (~(buttons) & (key))
 
