@@ -3,8 +3,12 @@
 
 #include "gba.h"
 
-// TODO: Create any necessary structs
-
+/**
+TODO:
+Create player struct
+Create enemy struct
+Create bullet struct
+**/
 /*
 * For example, for a Snake game, one could be:
 *

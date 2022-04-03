@@ -32,7 +32,7 @@ void drawRectDMA(int row, int col, int width, int height, volatile u16 color) {
   DMA[DMA_CHANNEL_3].cnt = 0; // prevent DMA from drawing before we set up src and dst 
   // We use DMA_CHANNEL_3 because that is the one for general purpose copies of memory
   DMA[DMA_CHANNEL_3].src = &color; // color holds the address of the color we want, which is why it's volatile bc the compiler might never initalize the variable otherwise
-  for (int i = 0; i < height; i++) { // iterating through each row of the rectangle
+  for (int i = 0; i < height; i++) { 
     DMA[DMA_CHANNEL_3].dst = videoBuffer[OFFSET(row + i, col, WIDTH)]; // filling in the current row
     DMA.cnt = width | DMA_SOURCE_FIXED | DMA_DESTINATION_INCREMENT | DMA_ON; // ORing a bunch of things we want for the control regsiter
   }
