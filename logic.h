@@ -3,6 +3,8 @@
 
 #define PHEIGHT 20
 #define PWIDTH 20
+#define BWIDTH 15
+#define BHEIGHT 29
 typedef struct player {
 	int x;
 	int y;
@@ -23,6 +25,8 @@ typedef struct boss {
 	int center;
 } BOSS;
 void initPlayer(void);
-void movePlayer(void);
+void initBoss(void);
+void moveSprites(void);
+void updateBullets(void); // Initalizes and moves bullets
 
 #endif

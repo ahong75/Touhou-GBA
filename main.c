@@ -61,6 +61,8 @@ int main(void) {
         drawGameBackground();
         waitForVBlank();
         initPlayer();
+        waitForVBlank();
+        initBoss();
         state = PLAY;
         break;
       case PLAY:
@@ -74,8 +76,11 @@ int main(void) {
         // TODO: if player collides with bullet -> go to LOSE
         // TODO: if player gets a certain score -> go to WIN
         // state = ?
+        //TODO: After a short period of time -> Boss animation
         waitForVBlank();
-        movePlayer();
+        moveSprites();
+        waitForVBlank();
+        updateBullets();
         break;
       case WIN:
 

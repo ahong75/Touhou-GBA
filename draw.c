@@ -4,6 +4,8 @@
 
 #include "images/title.h"
 #include "images/player.h"
+#include "images/boss.h"
+#include "images/bullet.h"
 void drawTitleScreen(void) {
 	drawFullScreenImageDMA(title);
 }

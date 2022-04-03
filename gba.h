@@ -113,7 +113,7 @@ typedef struct
 extern u32 vBlankCounter;
 
 /*
- * Runs a blocking loop until the start of next VBlank.
+ * Runs a vBlankCountercking loop until the start of next VBlank.
  */
 void waitForVBlank(void);
 
