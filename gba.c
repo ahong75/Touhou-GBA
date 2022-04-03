@@ -31,10 +31,11 @@ void drawRectDMA(int row, int col, int width, int height, volatile u16 color) {
   // test if we actually need this statement below later
   DMA[DMA_CHANNEL_3].cnt = 0; // prevent DMA from drawing before we set up src and dst 
   // We use DMA_CHANNEL_3 because that is the one for general purpose copies of memory
-  DMA[DMA_CHANNEL_3].src = &color; // color holds the address of the color we want, which is why it's volatile bc the compiler might never initalize the variable otherwise
+  DMA[DMA_CHANNEL_3].src = (const void *) &color; // color holds the address of the color we want, which is why it's volatile bc the compiler might never initalize the variable otherwise
   for (int i = 0; i < height; i++) { 
-    DMA[DMA_CHANNEL_3].dst = videoBuffer[OFFSET(row + i, col, WIDTH)]; // filling in the current row
-    DMA.cnt = width | DMA_SOURCE_FIXED | DMA_DESTINATION_INCREMENT | DMA_ON; // ORing a bunch of things we want for the control regsiter
+    // & is needed in the below expression because videoBuffer alone means a pointer, videoBuffer[x] is equivalent to *(videoBuffer + x) which is a value
+    DMA[DMA_CHANNEL_3].dst = &videoBuffer[OFFSET(row + i, col, WIDTH)]; // filling in the current row
+    DMA[DMA_CHANNEL_3].cnt = width | DMA_SOURCE_FIXED | DMA_DESTINATION_INCREMENT | DMA_ON; // ORing a bunch of things we want for the control regsiter
   }
 }
 
@@ -42,7 +43,7 @@ void drawFullScreenImageDMA(const u16 *image) {
   DMA[DMA_CHANNEL_3].cnt = 0; // prevent DMA from drawing before we set up src and dst 
   DMA[DMA_CHANNEL_3].src = image;
   DMA[DMA_CHANNEL_3].dst = videoBuffer;
-  DMA.cnt = WIDTH*HEIGHT | DMA_SOURCE_INCREMENT | DMA_DESTINATION_INCREMENT | DMA_ON;
+  DMA[DMA_CHANNEL_3].cnt = WIDTH*HEIGHT | DMA_SOURCE_INCREMENT | DMA_DESTINATION_INCREMENT | DMA_ON;
 }
 
 // Nearly identical to the logic of drawRectDMA
@@ -50,8 +51,8 @@ void drawImageDMA(int row, int col, int width, int height, const u16 *image) {
   DMA[DMA_CHANNEL_3].cnt = 0; // prevent DMA from drawing before we set up src and dst 
   DMA[DMA_CHANNEL_3].src = image;
   for (int i = 0; i < height; i++) {
-    DMA[DMA_CHANNEL_3].dst = videoBuffer[OFFSET(row + i, col, WIDTH)];
-    DMA.cnt = width | DMA_SOURCE_FIXED | DMA_DESTINATION_INCREMENT | DMA_ON;
+    DMA[DMA_CHANNEL_3].dst = &videoBuffer[OFFSET(row + i, col, WIDTH)];
+    DMA[DMA_CHANNEL_3].cnt = width | DMA_SOURCE_FIXED | DMA_DESTINATION_INCREMENT | DMA_ON;
   }
 }
 
@@ -69,7 +70,7 @@ void fillScreenDMA(volatile u16 color) {
   DMA[DMA_CHANNEL_3].cnt = 0; // prevent DMA from drawing before we set up src and dst 
   DMA[DMA_CHANNEL_3].src = &color; 
   DMA[DMA_CHANNEL_3].dst = videoBuffer;
-  DMA.cnt = WIDTH*HEIGHT | DMA_SOURCE_FIXED | DMA_DESTINATION_INCREMENT | DMA_ON; // WIDTH*HEIGHT indicates the number of pixels/indices we want to fill
+  DMA[DMA_CHANNEL_3].cnt = WIDTH*HEIGHT | DMA_SOURCE_FIXED | DMA_DESTINATION_INCREMENT | DMA_ON; // WIDTH*HEIGHT indicates the number of pixels/indices we want to fill
 }
 
 void drawChar(int row, int col, char ch, u16 color) {
