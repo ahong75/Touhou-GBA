@@ -13,7 +13,7 @@
 #define BHEIGHT BOSS_HEIGHT // height of boss
 #define buWIDTH BULLET_WIDTH // width of bullet
 #define buHEIGHT BULLET_HEIGHT // height of bullet
-#define MAX_BULLET 5 // max amount of bullets allowed at a time
+#define MAX_BULLET 7 // max amount of bullets allowed at a time
 #define BULLET_SPAWN_Y 40 // initial height of bullet spawn
 #define BULLET_SPAWN_REL 20 // relative y distance from boss center for the first bullet
 #define BULLET_SPAWN_GAP 10 // gap size between bullet spawn locations
@@ -24,7 +24,7 @@
 #define LHEIGHT LASER_HEIGHT // height of laser
 #define LWIDTH LASER_WIDTH
 #define LASER_VELOCITY 4
-#define BOSS_INITIAL_HEALTH 300
+#define BOSS_INITIAL_HEALTH 500
 typedef struct player {
 	int x;
 	int y;

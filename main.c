@@ -24,7 +24,7 @@ int main(void) {
   u32 currentButtons = BUTTONS;
 
   // Load initial application state
-  enum gba_state state = INIT_WIN;
+  enum gba_state state = START;
 
   // Create player struct
   // PLAYER player;

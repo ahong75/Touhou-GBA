@@ -9,7 +9,6 @@ static BULLET bullets[MAX_BULLET];
 static int bulletSpawn[MAX_BULLET]; // tracks bullet spawn locations
 static int bulletCount = 0;
 static long long score = 0;
-static int bossHealth = BOSS_INITIAL_HEALTH;
 static LASER lasers[MAX_LASER];
 
 int bossMove = 0;
@@ -33,6 +32,7 @@ void initBoss(void) {
 	boss1.velocity = 1;
 	boss1.centerx = boss1.x + BWIDTH / 2;
 	boss1.centery = boss1.y;
+	boss1.health = BOSS_INITIAL_HEALTH;
 	updateBoss(boss1.x, boss1.y, -1, -1);
 }
 /**
@@ -109,7 +109,7 @@ void updateLasers(void) {
 					if (boss1.x <= lasers[i].x &&
 						lasers[i].x < boss1.x + BWIDTH &&
 						lasers[i].y < boss1.y + BHEIGHT) {
-						bossHealth -= 10;
+						boss1.health -= 10;
 						score += 50;
 						drawScore(score, score - 50);
 						lasers[i].exist = 0;
@@ -140,7 +140,7 @@ void loseScreen(void) {
 }
 
 int checkWin(void) {
-	if (bossHealth <= 0) {
+	if (boss1.health <= 0) {
 		return 1;
 	}
 	return 0;
