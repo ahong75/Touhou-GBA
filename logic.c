@@ -66,10 +66,10 @@ void moveSprites(void) {
 		bossMove = randint(0, 3);
 	}
 	// Preventing the boss from getting too near screen edges
-	else if (boss1.x > WIDTH - 20) {
+	else if (boss1.x > WIDTH - 30) {
 		bossMove = 2;
 	}
-	else if (boss1.x < 20) {
+	else if (boss1.x < 30) {
 		bossMove = 1;
 	}
 	oldx = boss1.x;
