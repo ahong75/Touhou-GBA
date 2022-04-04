@@ -8,7 +8,7 @@ static int counter = 0;
 static BULLET bullets[MAX_BULLET];
 static int bulletSpawn[MAX_BULLET]; // tracks bullet spawn locations
 static int bulletCount = 0;
-static int dratioy = BULLET_SPAWN_Y - BOSS_SPAWN_Y;
+static int dratioy = BULLET_SPAWN_Y - BOSS_SPAWN_Y + BHEIGHT;
 int bossMove = 0;
 void initPlayer(void) {
 	player1.x = WIDTH / 2;
@@ -104,7 +104,7 @@ int updateBullets(void) {
 				if (newx < 5 || newx > WIDTH - 5) {
 					bullets[i].exist = 0;
 					bulletCount--;
-					updateBullet(oldx, oldy, -1, -1);
+					updateBullet(-1, -1, oldx, oldy);
 					continue;
 				}
 				bullets[i].x = newx;
@@ -112,16 +112,16 @@ int updateBullets(void) {
 			}
 			else {
 				int newy = bullets[i].y + 1;
-				if (newy < 5) {
+				if (newy > HEIGHT - 5) {
 					bullets[i].exist = 0;
 					bulletCount--;
-					updateBullet(oldx, oldy, -1, -1);
+					updateBullet(-1, -1, oldx, oldy);
 					continue;
 				}
 				bullets[i].y = newy;
 				bullets[i].drc = bullets[i].drc + 1;
 			}
-			updateBullet(oldx, oldy, bullets[i].x, bullets[i].y);
+			updateBullet(bullets[i].x, bullets[i].y, oldx, oldy);
 		}
 	}
 	// randomly spawning new bullets at the spawns
@@ -132,7 +132,9 @@ int updateBullets(void) {
 				bullets[i].exist = 1;
 				bullets[i].drc = 0;
 				bullets[i].dratio = bulletSpawn[i] - boss1.centerx;
-				updateBullet(bulletSpawn[i], BULLET_SPAWN_Y, -1, -1);
+				bullets[i].x = bulletSpawn[i];
+				bullets[i].y = BULLET_SPAWN_Y;
+				updateBullet(bullets[i].x, bullets[i].y, -1, -1);
 				bulletCount++;
 			}
 		}
