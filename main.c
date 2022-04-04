@@ -6,7 +6,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-// TODO: Win case 
 enum gba_state {
   START,
   TITLE,
@@ -60,19 +59,9 @@ int main(void) {
         state = PLAY;
         break;
       case PLAY:
-        /**
-        TODO:
-        Enemy Sprite
-        Bullet Patterns and Production
-        Player Sprite
-        Movement of Player Sprite
-        **/
-        // TODO: if player collides with bullet -> go to LOSE
-        // TODO: if player gets a certain score -> go to WIN
-        // state = ?
-        //TODO: After a short period of time -> Boss animation
         waitForVBlank();
         moveSprites();
+        updateLasers();
         updateScore();
         if (updateBullets()) {
           state = LOSE;

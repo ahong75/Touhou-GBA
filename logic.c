@@ -10,6 +10,8 @@ static int bulletSpawn[MAX_BULLET]; // tracks bullet spawn locations
 static int bulletCount = 0;
 static long long score = 0;
 
+static LASER lasers[MAX_LASER];
+
 int bossMove = 0;
 
 void initPlayer(void) {
@@ -19,6 +21,9 @@ void initPlayer(void) {
 	player1.velocity = PSPEED;
 	player1.center = player1.x + PWIDTH / 2;
 	updatePlayer(player1.x, player1.y, -1 , -1);
+	for (int i = 0; i < MAX_LASER; i++) {
+		lasers[i].exist = 0;
+	}
 }
 
 void initBoss(void) {
@@ -85,6 +90,35 @@ void moveSprites(void) {
 	}
 	boss1.centerx = boss1.x + BWIDTH / 2;
 	updateBulletSpawn();
+}
+
+void updateLasers(void) {
+		int update = 0; // Can only create one bullet per call
+		if (counter % 5 == 0) {
+			update = 1;
+		}
+		for (int i = 0; i < MAX_LASER; i++) {
+			if (lasers[i].exist) {
+				int oldx = lasers[i].x;
+				int oldy = lasers[i].y;
+				if (lasers[i].y < 5) {
+					lasers[i].exist = 0;
+					updateLaser(-1, -1, oldx, oldy);
+				}
+				else {
+					lasers[i].y = lasers[i].y - lasers[i].velocity;
+					updateLaser(lasers[i].x, lasers[i].y, oldx, oldy);
+				}
+			}
+			if (update == 1 && lasers[i].exist == 0 && KEY_DOWN(BUTTON_A, BUTTONS)) {
+				lasers[i].exist = 1;
+				lasers[i].x = player1.center - 1;
+				lasers[i].y = player1.y - 5;
+				lasers[i].velocity = LASER_VELOCITY;
+				updateLaser(lasers[i].x, lasers[i].y, -1, -1);
+				update = 0;
+			}
+		}
 }
 
 void updateScore(void) {
@@ -158,7 +192,7 @@ int updateBullets(void) {
 				bullets[i].x + buWIDTH > player1.center &&
 				bullets[i].y < player1.y &&
 				bullets[i].y + buHEIGHT > player1.y) {
-				return 1; // transition to the next state
+				return 1; // transition to lose state
 			}
 		}
 	}

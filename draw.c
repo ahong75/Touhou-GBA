@@ -8,6 +8,7 @@
 #include "images/boss.h"
 #include "images/bullet.h"
 #include "images/lose.h"
+#include "images/laser.h"
 void drawTitleScreen(void) {
 	drawFullScreenImageDMA(title);
 }
@@ -37,31 +38,37 @@ void drawLoseScreen(long long score) {
 	}
 }
 
-int updatePlayer(int nrow, int ncol, int orow, int ocol) {
+void updatePlayer(int nrow, int ncol, int orow, int ocol) {
 	if (orow != -1) {
 		drawRectDMA(orow, ocol, PWIDTH, PHEIGHT, BLUE);
 	}
 	drawImageDMA(nrow, ncol, PWIDTH, PHEIGHT, player);
-	return 0;
 }
 
 // There's some bug where the boss leaves a couple pixels behind
-int updateBoss(int nrow, int ncol, int orow, int ocol) {
+void updateBoss(int nrow, int ncol, int orow, int ocol) {
 	if (orow != -1) {
 		drawRectDMA(orow, ocol, BWIDTH + 1, BHEIGHT + 1, BLUE);
 	}
 	drawImageDMA(nrow, ncol, BWIDTH, BHEIGHT, boss);
-	return 0;
 }
 
-int updateBullet(int nrow, int ncol, int orow, int ocol) {
+void updateBullet(int nrow, int ncol, int orow, int ocol) {
 	if (orow != -1) {
 		drawRectDMA(orow, ocol, buWIDTH + 1, buHEIGHT + 1, BLUE);
 	}
 	if (nrow != -1) {
 		drawImageDMA(nrow, ncol, buWIDTH, buHEIGHT, bullet);
 	}
-	return 0;
+}
+
+void updateLaser(int nrow, int ncol, int orow, int ocol) {
+	if (orow != -1) {
+		drawRectDMA(orow, ocol, LWIDTH, LHEIGHT, BLUE);
+	}
+	if (nrow != -1) {
+		drawImageDMA(nrow, ncol, LWIDTH, LHEIGHT, laser);
+	}
 }
 
 void drawScore(long long score) {

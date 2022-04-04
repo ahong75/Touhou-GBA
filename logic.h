@@ -5,6 +5,7 @@
 #include "images/boss.h"
 #include "images/bullet.h"
 #include "images/lose.h"
+#include "images/laser.h"
 // These are really pointless when they're already basically defined in another header file
 #define PHEIGHT PLAYER_HEIGHT // height of player
 #define PWIDTH PLAYER_WIDTH // width of player
@@ -20,6 +21,10 @@
 #define BOSS_SPAWN_X 120 // initial x location of boss spawn
 #define BOSS_SPAWN_Y 8 // initial y location of boss spawn
 #define NEGMOD(x, y, M) (((((x) - (y)) % M) + (M)) % M) // needed to handle undefined mod of negative numbers
+#define MAX_LASER 5
+#define LHEIGHT LASER_HEIGHT // height of laser
+#define LWIDTH LASER_WIDTH
+#define LASER_VELOCITY 4
 typedef struct player {
 	int x;
 	int y;
@@ -27,7 +32,6 @@ typedef struct player {
 	int velocity;
 } PLAYER;
 
-// TODO: Moving bullets at angles is difficult because floating point math is not allowed
 typedef struct bullet {
 	int exist;
 	int x;
@@ -35,6 +39,14 @@ typedef struct bullet {
 	int velocity;
 	int homing;
 } BULLET;
+
+typedef struct laser {
+	int exist;
+	int x;
+	int y;
+	int velocity;
+	int homing;
+} LASER;
 // Can designate an enemy "center" and use the slopes from the center to the edge to generate a bullet
 
 typedef struct boss {
@@ -48,6 +60,7 @@ void initPlayer(void);
 void initBoss(void);
 void initBullets(void);
 void moveSprites(void);
+void updateLasers(void);
 void updateBulletSpawn(void);
 void updateScore(void);
 void loseScreen(void);

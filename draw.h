@@ -16,13 +16,16 @@ void drawLoseScreen(long long score);
 void updateScore(void);
 
 // Updates the player/bullets and checks if they have collided with a bullet
-int updatePlayer(int nrow, int ncol, int orow, int ocol);
+void updatePlayer(int nrow, int ncol, int orow, int ocol);
 
 // Updates the boss
-int updateBoss(int nrow, int ncol, int orow, int ocol);
+void updateBoss(int nrow, int ncol, int orow, int ocol);
 
 // Update the bullets and checks if they have collided with the player
-int updateBullet(int nrow, int ncol, int orow, int ocol);
+void updateBullet(int nrow, int ncol, int orow, int ocol);
+
+// Updates a laser
+void updateLaser(int nrow, int ncol, int orow, int ocol);
 
 // Draw the player's current score
 void drawScore(long long score);
