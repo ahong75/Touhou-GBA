@@ -100,10 +100,10 @@ int updateBullets(void) {
 			int oldy = bullets[i].y;
 			int newx = bullets[i].x;
 			if (bullets[i].x < player1.x) {
-				newx = newx + 1;
+				newx = newx + bullets[i].velocity;
 			}
 			else {
-				newx = newx - 1;
+				newx = newx - bullets[i].velocity;
 			}
 			int newy = bullets[i].y + bullets[i].velocity;
 			if (newy > HEIGHT - 5 || newx < 5 || newx > WIDTH - 5) {

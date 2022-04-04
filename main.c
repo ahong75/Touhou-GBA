@@ -72,7 +72,6 @@ int main(void) {
         //TODO: After a short period of time -> Boss animation
         waitForVBlank();
         moveSprites();
-        waitForVBlank();
         updateBullets();
         break;
       case WIN:
