@@ -28,16 +28,22 @@ int updatePlayer(int nrow, int ncol, int orow, int ocol) {
 	return 0;
 }
 
+// There's some bug where the boss leaves a couple pixels behind
 int updateBoss(int nrow, int ncol, int orow, int ocol) {
 	if (orow != -1) {
-		drawRectDMA(orow, ocol, BWIDTH, BHEIGHT, BLUE);
+		drawRectDMA(orow, ocol, BWIDTH + 1, BHEIGHT + 1, BLUE);
 	}
 	drawImageDMA(nrow, ncol, BWIDTH, BHEIGHT, boss);
 	return 0;
 }
 
-int updateBullets(void) {
-	// TODO: Implement this
+int updateBullet(int nrow, int ncol, int orow, int ocol) {
+	if (orow != -1) {
+		drawRectDMA(orow, ocol, buWIDTH + 1, buHEIGHT + 1, BLUE);
+	}
+	if (nrow != -1) {
+		drawImageDMA(nrow, ncol, buWIDTH, buHEIGHT, bullet);
+	}
 	return 0;
 }
 

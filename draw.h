@@ -19,5 +19,5 @@ int updatePlayer(int nrow, int ncol, int orow, int ocol);
 int updateBoss(int nrow, int ncol, int orow, int ocol);
 
 // Update the bullets and checks if they have collided with the player
-int updateBullets(void);
+int updateBullet(int nrow, int ncol, int orow, int ocol);
 #endif
