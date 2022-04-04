@@ -27,10 +27,17 @@ void initBoss(void) {
 	updateBoss(boss1.x, boss1.y, -1, -1);
 }
 /**
-#define BUTTON_RIGHT    (1<<4)
-#define BUTTON_LEFT     (1<<5)
-#define BUTTON_UP       (1<<6)
-#define BUTTON_DOWN     (1<<7)
+TODO:
+Collision with player 
+Scoreboard using vBlankCounter
+Collision between bullets
+Text for menu and death screen
+
+extra:
+cleanup defines like the width and height 
+cleanup logic
+music
+sprites instead of images for bullets at least
 **/
 void moveSprites(void) {
 	int oldx = player1.x;
@@ -53,7 +60,6 @@ void moveSprites(void) {
 	if (counter == 0) {
 		bossMove = randint(0, 3);
 	}
-
 	// Preventing the boss from getting too near screen edges
 	else if (boss1.x > WIDTH - 20) {
 		bossMove = 2;
@@ -99,10 +105,10 @@ int updateBullets(void) {
 			int oldx = bullets[i].x;
 			int oldy = bullets[i].y;
 			int newx = bullets[i].x;
-			if (bullets[i].x < player1.x) {
+			if (oldx < player1.x && oldy < player1.y) {
 				newx = newx + bullets[i].velocity;
 			}
-			else {
+			else if (oldx > player1.x && oldy < player1.y) {
 				newx = newx - bullets[i].velocity;
 			}
 			int newy = bullets[i].y + bullets[i].velocity;
@@ -115,6 +121,20 @@ int updateBullets(void) {
 			bullets[i].x = newx;
 			bullets[i].y = newy;
 			updateBullet(bullets[i].x, bullets[i].y, oldx, oldy);
+			for (int j = 0; j < MAX_BULLET; j++) {
+				if (i != j && bullets[j].exist) {
+					if (bullets[i].x < bullets[j].x + buWIDTH &&
+						bullets[i].x + buWIDTH > bullets[j].x &&
+						bullets[i].y < bullets[j].y + buHEIGHT &&
+						bullets[i].y + buHEIGHT > bullets[j].y) {
+						// collision detected between bullets
+						updateBullet(-1, -1, bullets[i].x, bullets[i].y);
+						bullets[i].exist = 0;
+						bulletCount--;
+						break;
+					}
+				}
+			}
 		}
 	}
 	// randomly spawning new bullets at the spawns
