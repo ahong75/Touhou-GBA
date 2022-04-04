@@ -27,6 +27,9 @@ void updateBullet(int nrow, int ncol, int orow, int ocol);
 // Updates a laser
 void updateLaser(int nrow, int ncol, int orow, int ocol);
 
+// Draws damage animation
+void drawDamage(int row, int col);
+
 // Draw the player's current score
 void drawScore(long long score);
 #endif

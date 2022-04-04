@@ -6,7 +6,6 @@
 #include "images/bullet.h"
 #include "images/lose.h"
 #include "images/laser.h"
-// These are really pointless when they're already basically defined in another header file
 #define PHEIGHT PLAYER_HEIGHT // height of player
 #define PWIDTH PLAYER_WIDTH // width of player
 #define PSPEED 3 // speed of player
@@ -25,6 +24,7 @@
 #define LHEIGHT LASER_HEIGHT // height of laser
 #define LWIDTH LASER_WIDTH
 #define LASER_VELOCITY 4
+#define BOSS_INITIAL_HEALTH 300
 typedef struct player {
 	int x;
 	int y;

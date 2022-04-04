@@ -1,11 +1,11 @@
 /*
  * Exported with nin10kit v1.8
- * Invocation command was nin10kit --mode=3 --resize=240x160 title title.png 
- * Time-stamp: Sunday 04/03/2022, 00:54:05
+ * Invocation command was nin10kit --mode=3 --resize=240x160 title title.jpg 
+ * Time-stamp: Monday 04/04/2022, 22:44:15
  * 
  * Image Information
  * -----------------
- * title.png 240@160
+ * title.jpg 240@160
  * 
  * All bug reports / feature requests are to be filed here https://github.com/TricksterGuy/nin10kit/issues
  */

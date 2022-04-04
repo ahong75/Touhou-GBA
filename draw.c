@@ -71,6 +71,11 @@ void updateLaser(int nrow, int ncol, int orow, int ocol) {
 	}
 }
 
+void drawDamage(int row, int col) {
+	drawRectDMA(row, col, 5, 5, WHITE);
+	drawRectDMA(row, col, 5, 5, BLACK);
+}
+
 void drawScore(long long score) {
 	char cur[256];
 	sprintf(cur, "%lld", score); // converting long long to str

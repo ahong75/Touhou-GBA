@@ -9,7 +9,7 @@ static BULLET bullets[MAX_BULLET];
 static int bulletSpawn[MAX_BULLET]; // tracks bullet spawn locations
 static int bulletCount = 0;
 static long long score = 0;
-
+static int bossHealth = BOSS_INITIAL_HEALTH;
 static LASER lasers[MAX_LASER];
 
 int bossMove = 0;
@@ -93,7 +93,7 @@ void moveSprites(void) {
 }
 
 void updateLasers(void) {
-		int update = 0; // Can only create one bullet per call
+		int update = 0; // Can only create one bullet per call; Prevents creating too many bullets at once
 		if (counter % 5 == 0) {
 			update = 1;
 		}
@@ -108,6 +108,15 @@ void updateLasers(void) {
 				else {
 					lasers[i].y = lasers[i].y - lasers[i].velocity;
 					updateLaser(lasers[i].x, lasers[i].y, oldx, oldy);
+					if (boss1.x <= lasers[i].x &&
+						lasers[i].x < boss1.x + BWIDTH &&
+						lasers[i].y < boss1.y + BHEIGHT) {
+						bossHealth -= 10;
+						score += 50;
+						lasers[i].exist = 0;
+						updateLaser(-1, -1, lasers[i].x, lasers[i].y);
+						drawDamage(lasers[i].x, lasers[i].y);
+					}
 				}
 			}
 			if (update == 1 && lasers[i].exist == 0 && KEY_DOWN(BUTTON_A, BUTTONS)) {
