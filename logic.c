@@ -8,8 +8,8 @@ static int counter = 0;
 static BULLET bullets[MAX_BULLET];
 static int bulletSpawn[MAX_BULLET]; // tracks bullet spawn locations
 static int bulletCount = 0;
-static int dratioy = BULLET_SPAWN_Y - BOSS_SPAWN_Y + BHEIGHT;
 int bossMove = 0;
+
 void initPlayer(void) {
 	player1.x = WIDTH / 2;
 	player1.y = HEIGHT / 2;
@@ -93,34 +93,27 @@ void updateBulletSpawn(void) {
 }
 
 int updateBullets(void) {
-	// updating each spawned bullet's position based on dratio
+	// updating each spawned bullet's position based on its relative position to the player
 	for (int i = 0; i < MAX_BULLET; i++) {
 		if (bullets[i].exist) {
 			int oldx = bullets[i].x;
 			int oldy = bullets[i].y;
-			if (bullets[i].drc == dratioy) {
-				int newx = bullets[i].x + bullets[i].dratio;
-				// Getting rid of bullets that are about to go off screen
-				if (newx < 5 || newx > WIDTH - 5) {
-					bullets[i].exist = 0;
-					bulletCount--;
-					updateBullet(-1, -1, oldx, oldy);
-					continue;
-				}
-				bullets[i].x = newx;
-				bullets[i].drc = 0;
+			int newx = bullets[i].x;
+			if (bullets[i].x < player1.x) {
+				newx = newx + 1;
 			}
 			else {
-				int newy = bullets[i].y + 1;
-				if (newy > HEIGHT - 5) {
-					bullets[i].exist = 0;
-					bulletCount--;
-					updateBullet(-1, -1, oldx, oldy);
-					continue;
-				}
-				bullets[i].y = newy;
-				bullets[i].drc = bullets[i].drc + 1;
+				newx = newx - 1;
 			}
+			int newy = bullets[i].y + bullets[i].velocity;
+			if (newy > HEIGHT - 5 || newx < 5 || newx > WIDTH - 5) {
+				bullets[i].exist = 0;
+				bulletCount--;
+				updateBullet(-1, -1, oldx, oldy);
+				continue;
+			}
+			bullets[i].x = newx;
+			bullets[i].y = newy;
 			updateBullet(bullets[i].x, bullets[i].y, oldx, oldy);
 		}
 	}
@@ -130,10 +123,9 @@ int updateBullets(void) {
 			int create = randint(0, 2);
 			if (create && bullets[i].exist == 0) {
 				bullets[i].exist = 1;
-				bullets[i].drc = 0;
-				bullets[i].dratio = bulletSpawn[i] - boss1.centerx;
 				bullets[i].x = bulletSpawn[i];
 				bullets[i].y = BULLET_SPAWN_Y;
+				bullets[i].velocity = randint(1, 3);
 				updateBullet(bullets[i].x, bullets[i].y, -1, -1);
 				bulletCount++;
 			}
