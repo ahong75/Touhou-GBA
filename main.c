@@ -72,13 +72,17 @@ int main(void) {
         //TODO: After a short period of time -> Boss animation
         waitForVBlank();
         moveSprites();
-        updateBullets();
+        updateScore();
+        if (updateBullets()) {
+          state = LOSE;
+        }
         break;
       case WIN:
 
         break;
       case LOSE:
         // TODO: if player presses start -> retry (go back to init_play)
+        drawLoseScreen();
         break;
     }
 

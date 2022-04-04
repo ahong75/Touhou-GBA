@@ -20,4 +20,7 @@ int updateBoss(int nrow, int ncol, int orow, int ocol);
 
 // Update the bullets and checks if they have collided with the player
 int updateBullet(int nrow, int ncol, int orow, int ocol);
+
+// Draw the player's current score
+void drawScore(long long score);
 #endif

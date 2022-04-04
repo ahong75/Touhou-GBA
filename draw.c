@@ -1,11 +1,13 @@
 #include "draw.h"
 #include "gba.h"
 #include "logic.h"
+#include <stdio.h>
 
 #include "images/title.h"
 #include "images/player.h"
 #include "images/boss.h"
 #include "images/bullet.h"
+#include "images/lose.h"
 void drawTitleScreen(void) {
 	drawFullScreenImageDMA(title);
 }
@@ -16,6 +18,7 @@ void drawGameBackground(void) {
 }
 
 void drawLoseScreen(void) {
+	drawFullScreenImageDMA(lose);
 	// TODO: Implement this
 	return;
 }
@@ -47,7 +50,13 @@ int updateBullet(int nrow, int ncol, int orow, int ocol) {
 	return 0;
 }
 
-void updateScore(void) {
-	// TODO: Implement this
-	return;
+void drawScore(long long score) {
+	char cur[256];
+	sprintf(cur, "%lld", score); // converting long long to str
+	if (score != 1) {
+		char prev[256];
+		sprintf(prev, "%lld", score - 1);
+		drawString(5, WIDTH - 30, prev, BLUE);
+	}
+	drawString(5, WIDTH - 30, cur, BLACK);
 }

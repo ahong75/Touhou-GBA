@@ -8,12 +8,16 @@ static int counter = 0;
 static BULLET bullets[MAX_BULLET];
 static int bulletSpawn[MAX_BULLET]; // tracks bullet spawn locations
 static int bulletCount = 0;
+static long long score = 0;
+
 int bossMove = 0;
 
 void initPlayer(void) {
+	score = 0;
 	player1.x = WIDTH / 2;
 	player1.y = HEIGHT / 2;
-	player1.velocity = 2;
+	player1.velocity = PSPEED;
+	player1.center = player1.x + PWIDTH / 2;
 	updatePlayer(player1.x, player1.y, -1 , -1);
 }
 
@@ -55,6 +59,7 @@ void moveSprites(void) {
 		player1.y = (player1.y + player1.velocity) % HEIGHT;
 	}
 	updatePlayer(player1.x, player1.y, oldx, oldy);
+	player1.center = player1.x + PWIDTH / 2;
 	// Below code is to only make the Boss move randomly in 1 direction once in a while
 	counter = (counter + 1) % 30;
 	if (counter == 0) {
@@ -84,8 +89,14 @@ void moveSprites(void) {
 	updateBulletSpawn();
 }
 
+void updateScore(void) {
+	score++;
+	drawScore(score);
+}
+
 // Spaghetti code for bullet logic and spawning
 void initBullets(void) {
+	bulletCount = 0;
 	for (int i = 0; i < MAX_BULLET; i++) {
 		bullets[i].exist = 0;
 		bulletSpawn[i] = boss1.x - BULLET_SPAWN_REL + i*BULLET_SPAWN_GAP;
@@ -105,12 +116,12 @@ int updateBullets(void) {
 			int oldx = bullets[i].x;
 			int oldy = bullets[i].y;
 			int newx = bullets[i].x;
-			if (oldx < player1.x && oldy < player1.y) {
-				newx = newx + bullets[i].velocity;
-			}
-			else if (oldx > player1.x && oldy < player1.y) {
-				newx = newx - bullets[i].velocity;
-			}
+			// if (oldx < player1.x && oldy < player1.y) {
+			// 	newx = newx + bullets[i].velocity;
+			// }
+			// else if (oldx > player1.x && oldy < player1.y) {
+			// 	newx = newx - bullets[i].velocity;
+			// }
 			int newy = bullets[i].y + bullets[i].velocity;
 			if (newy > HEIGHT - 5 || newx < 5 || newx > WIDTH - 5) {
 				bullets[i].exist = 0;
@@ -121,6 +132,7 @@ int updateBullets(void) {
 			bullets[i].x = newx;
 			bullets[i].y = newy;
 			updateBullet(bullets[i].x, bullets[i].y, oldx, oldy);
+			// collision detection between bullets
 			for (int j = 0; j < MAX_BULLET; j++) {
 				if (i != j && bullets[j].exist) {
 					if (bullets[i].x < bullets[j].x + buWIDTH &&
@@ -135,8 +147,16 @@ int updateBullets(void) {
 					}
 				}
 			}
+			// collision detection with player
+			if (bullets[i].x < player1.center &&
+				bullets[i].x + buWIDTH > player1.center &&
+				bullets[i].y < player1.y &&
+				bullets[i].y + buHEIGHT > player1.y) {
+				return 1; // transition to the next state
+			}
 		}
 	}
+	// TODO: Only launch bullets after a certain amount of time has passed
 	// randomly spawning new bullets at the spawns
 	if (bulletCount < MAX_BULLET) {
 		for (int i = 0; i < MAX_BULLET; i++) {
