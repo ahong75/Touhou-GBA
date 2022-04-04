@@ -11,7 +11,8 @@ enum gba_state {
   TITLE,
   INIT_PLAY,
   PLAY,
-  // WIN,
+  INIT_WIN,
+  WIN,
   LOSE,
 };
 
@@ -23,7 +24,7 @@ int main(void) {
   u32 currentButtons = BUTTONS;
 
   // Load initial application state
-  enum gba_state state = START;
+  enum gba_state state = INIT_WIN;
 
   // Create player struct
   // PLAYER player;
@@ -66,11 +67,18 @@ int main(void) {
         if (updateBullets()) {
           state = LOSE;
         }
+        if (checkWin()) {
+          state = INIT_WIN;
+        }
         break;
-      // case WIN:
-      //   break;
+      case INIT_WIN:
+        waitForVBlank();
+        drawTitleScreen();
+        drawWinMessage();
+        state = WIN;
+      case WIN:
+        break;
       case LOSE:
-        // TODO: if player presses start -> retry (go back to init_play)
         loseScreen();
         break;
     }

@@ -38,6 +38,15 @@ void drawLoseScreen(long long score) {
 	}
 }
 
+void drawWinMessage(void) {
+	char message1[] = "CONGRATULATIONS!";
+	char message2[] = "YOU SAVED THE UNIVERSE!";
+	// drawString(HEIGHT / 2 - 20, WIDTH / 2 - 40, message1, WHITE);
+	// drawString(HEIGHT / 2, WIDTH / 2 - 40, message2, WHITE);
+	drawCenteredString(HEIGHT / 2 - 20, WIDTH / 2 - 20, 40, 10, message1, WHITE);
+	drawCenteredString(HEIGHT / 2, WIDTH / 2 - 20, 40, 10, message2, WHITE);
+}
+
 void updatePlayer(int nrow, int ncol, int orow, int ocol) {
 	if (orow != -1) {
 		drawRectDMA(orow, ocol, PWIDTH, PHEIGHT, BLUE);
@@ -72,16 +81,15 @@ void updateLaser(int nrow, int ncol, int orow, int ocol) {
 }
 
 void drawDamage(int row, int col) {
-	drawRectDMA(row, col, 5, 5, WHITE);
-	drawRectDMA(row, col, 5, 5, BLACK);
+	drawRectDMA(row, col, 4, 4, BLUE);
 }
 
-void drawScore(long long score) {
+void drawScore(long long score, long long prevscore) {
 	char cur[256];
 	sprintf(cur, "%lld", score); // converting long long to str
 	if (score != 1) {
 		char prev[256];
-		sprintf(prev, "%lld", score - 1);
+		sprintf(prev, "%lld", prevscore);
 		drawString(5, WIDTH - 30, prev, BLUE);
 	}
 	drawString(5, WIDTH - 30, cur, BLACK);

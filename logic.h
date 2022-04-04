@@ -47,7 +47,7 @@ typedef struct laser {
 	int velocity;
 	int homing;
 } LASER;
-// Can designate an enemy "center" and use the slopes from the center to the edge to generate a bullet
+// TODO: Can designate an enemy "center" and use the slopes from the center to the edge to generate a bullet
 
 typedef struct boss {
 	int x;
@@ -55,6 +55,7 @@ typedef struct boss {
 	int velocity;
 	int centerx;
 	int centery;
+	int health; // Boss gets health, player doesn't need health because he gets one shot anyways (Yes this is a feature)
 } BOSS;
 void initPlayer(void);
 void initBoss(void);
@@ -64,6 +65,7 @@ void updateLasers(void);
 void updateBulletSpawn(void);
 void updateScore(void);
 void loseScreen(void);
+int checkWin(void);
 int updateBullets(void); // Initalizes and moves bullets
 
 

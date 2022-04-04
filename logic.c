@@ -37,14 +37,12 @@ void initBoss(void) {
 }
 /**
 TODO:
-
 extra:
-Player bullets
 boss patterns
-cleanup defines like the width and height 
 cleanup logic
 music
 sprites instead of images for bullets at least
+Change background image for gameplay, means everything needs to be changed to sprites
 **/
 void moveSprites(void) {
 	int oldx = player1.x;
@@ -113,6 +111,7 @@ void updateLasers(void) {
 						lasers[i].y < boss1.y + BHEIGHT) {
 						bossHealth -= 10;
 						score += 50;
+						drawScore(score, score - 50);
 						lasers[i].exist = 0;
 						updateLaser(-1, -1, lasers[i].x, lasers[i].y);
 						drawDamage(lasers[i].x, lasers[i].y);
@@ -132,12 +131,19 @@ void updateLasers(void) {
 
 void updateScore(void) {
 	score++;
-	drawScore(score);
+	drawScore(score, score - 1);
 }
 
 void loseScreen(void) {
 	drawLoseScreen(score);
 	score = 0;
+}
+
+int checkWin(void) {
+	if (bossHealth <= 0) {
+		return 1;
+	}
+	return 0;
 }
 
 // Spaghetti code for bullet logic and spawning

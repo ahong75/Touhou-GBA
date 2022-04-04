@@ -30,6 +30,9 @@ void updateLaser(int nrow, int ncol, int orow, int ocol);
 // Draws damage animation
 void drawDamage(int row, int col);
 
-// Draw the player's current score
-void drawScore(long long score);
+// Draw the player's current score while undrawing the previous score
+void drawScore(long long score, long long prevscore);
+
+// Draws the win message if the player manages to win (unlikely)
+void drawWinMessage(void);
 #endif
