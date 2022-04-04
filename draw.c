@@ -32,7 +32,7 @@ void drawLoseScreen(long long score) {
 		sprintf(fscore, "%lld", score);
 		drawString(HEIGHT / 2 - 20, WIDTH / 2 - 40, message1, WHITE);
 		drawString(HEIGHT / 2, WIDTH / 2 - 40, message2, WHITE);
-		drawCenteredString(HEIGHT / 2 + 20, WIDTH / 2 - 30, 40, 10, fscore, WHITE);
+		drawCenteredString(HEIGHT / 2 + 20, WIDTH / 2 - 25, 40, 10, fscore, WHITE);
 		return;	
 	}
 }

@@ -32,12 +32,10 @@ void initBoss(void) {
 }
 /**
 TODO:
-Collision with player 
-Scoreboard using vBlankCounter
-Collision between bullets
-Text for menu and death screen
 
 extra:
+Player bullets
+boss patterns
 cleanup defines like the width and height 
 cleanup logic
 music
@@ -47,19 +45,19 @@ void moveSprites(void) {
 	int oldx = player1.x;
 	int oldy = player1.y;
 	if (KEY_DOWN(BUTTON_LEFT, BUTTONS)) {
-		player1.x = (player1.x - player1.velocity) % WIDTH;
+		player1.x = NEGMOD(player1.x, player1.velocity, WIDTH);
 	}
 	if (KEY_DOWN(BUTTON_RIGHT, BUTTONS)) {
 		player1.x = (player1.x + player1.velocity) % WIDTH;
 	}
 	if (KEY_DOWN(BUTTON_UP, BUTTONS)) {
-		player1.y = (player1.y - player1.velocity) % HEIGHT;
+		player1.y = NEGMOD(player1.y, player1.velocity, HEIGHT);
 	}
 	if (KEY_DOWN(BUTTON_DOWN, BUTTONS)) {
 		player1.y = (player1.y + player1.velocity) % HEIGHT;
 	}
 	updatePlayer(player1.x, player1.y, oldx, oldy);
-	player1.center = player1.x + PWIDTH / 2;
+	player1.center = (player1.x + PWIDTH / 2) % WIDTH;
 	// Below code is to only make the Boss move randomly in 1 direction once in a while
 	counter = (counter + 1) % 30;
 	if (counter == 0) {
@@ -104,6 +102,7 @@ void initBullets(void) {
 	bulletCount = 0;
 	for (int i = 0; i < MAX_BULLET; i++) {
 		bullets[i].exist = 0;
+		bullets[i].homing = 0;
 		bulletSpawn[i] = boss1.x - BULLET_SPAWN_REL + i*BULLET_SPAWN_GAP;
 	}
 }
@@ -121,12 +120,14 @@ int updateBullets(void) {
 			int oldx = bullets[i].x;
 			int oldy = bullets[i].y;
 			int newx = bullets[i].x;
-			// if (oldx < player1.x && oldy < player1.y) {
-			// 	newx = newx + bullets[i].velocity;
-			// }
-			// else if (oldx > player1.x && oldy < player1.y) {
-			// 	newx = newx - bullets[i].velocity;
-			// }
+			if (bullets[i].homing) {
+				if (oldx < player1.x && oldy < player1.y) {
+					newx = newx + bullets[i].velocity;
+				}
+				else if (oldx > player1.x && oldy < player1.y) {
+					newx = newx - bullets[i].velocity;
+				}
+			}
 			int newy = bullets[i].y + bullets[i].velocity;
 			if (newy > HEIGHT - 5 || newx < 5 || newx > WIDTH - 5) {
 				bullets[i].exist = 0;
@@ -161,18 +162,40 @@ int updateBullets(void) {
 			}
 		}
 	}
-	// TODO: Only launch bullets after a certain amount of time has passed
 	// randomly spawning new bullets at the spawns
-	if (bulletCount < MAX_BULLET) {
-		for (int i = 0; i < MAX_BULLET; i++) {
-			int create = randint(0, 2);
-			if (create && bullets[i].exist == 0) {
-				bullets[i].exist = 1;
-				bullets[i].x = bulletSpawn[i];
-				bullets[i].y = BULLET_SPAWN_Y;
-				bullets[i].velocity = randint(1, 3);
-				updateBullet(bullets[i].x, bullets[i].y, -1, -1);
-				bulletCount++;
+	int create = 0;
+	if (counter == 0) {
+		create = randint(0, 4); // 0 is no bullets, 1, 2, 3 are different bullet modes
+	}
+	if (score >= 100) {
+		if (bulletCount < MAX_BULLET) {
+			for (int i = 0; i < MAX_BULLET; i++) {
+				if (bullets[i].exist == 0) {
+					bullets[i].homing = 0;
+					bullets[i].y = BULLET_SPAWN_Y;
+					bullets[i].velocity = 1;
+					if (create == 2) {
+						bullets[i].exist = 1;
+						bullets[i].x = bulletSpawn[MAX_BULLET / 2];
+						bulletCount++;
+						updateBullet(bullets[i].x, bullets[i].y, -1, -1);
+						break;
+					}
+					if (create == 1 || create == 3) {
+						int spawn = randint(0, 2);
+						if (spawn) {
+							bullets[i].exist = 1;
+							bullets[i].x = bulletSpawn[i];
+							bullets[i].velocity = randint(1, 3);
+							if (create == 3) {
+								bullets[i].velocity = 1;
+								bullets[i].homing = 1;
+							}
+							bulletCount++;
+							updateBullet(bullets[i].x, bullets[i].y, -1, -1);
+						}
+					}
+				}
 			}
 		}
 	}

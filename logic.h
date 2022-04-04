@@ -1,20 +1,25 @@
 #ifndef LOGIC_H
 #define LOGIC_H
-
+#include "images/title.h"
+#include "images/player.h"
+#include "images/boss.h"
+#include "images/bullet.h"
+#include "images/lose.h"
 // These are really pointless when they're already basically defined in another header file
-#define PHEIGHT 20 // height of player
-#define PWIDTH 20 // width of player
+#define PHEIGHT PLAYER_HEIGHT // height of player
+#define PWIDTH PLAYER_WIDTH // width of player
 #define PSPEED 3 // speed of player
-#define BWIDTH 15 // width of boss
-#define BHEIGHT 29 // height of boss
-#define buWIDTH 10 // width of bullet
-#define buHEIGHT 10 // height of bullet
-#define MAX_BULLET 8 // max amount of bullets allowed at a time
+#define BWIDTH BOSS_WIDTH // width of boss
+#define BHEIGHT BOSS_HEIGHT // height of boss
+#define buWIDTH BULLET_WIDTH // width of bullet
+#define buHEIGHT BULLET_HEIGHT // height of bullet
+#define MAX_BULLET 5 // max amount of bullets allowed at a time
 #define BULLET_SPAWN_Y 40 // initial height of bullet spawn
 #define BULLET_SPAWN_REL 20 // relative y distance from boss center for the first bullet
-#define BULLET_SPAWN_GAP 8 // gap size between bullet spawn locations
+#define BULLET_SPAWN_GAP 10 // gap size between bullet spawn locations
 #define BOSS_SPAWN_X 120 // initial x location of boss spawn
 #define BOSS_SPAWN_Y 8 // initial y location of boss spawn
+#define NEGMOD(x, y, M) (((((x) - (y)) % M) + (M)) % M) // needed to handle undefined mod of negative numbers
 typedef struct player {
 	int x;
 	int y;
@@ -28,6 +33,7 @@ typedef struct bullet {
 	int x;
 	int y;
 	int velocity;
+	int homing;
 } BULLET;
 // Can designate an enemy "center" and use the slopes from the center to the edge to generate a bullet
 
