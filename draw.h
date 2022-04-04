@@ -3,6 +3,9 @@
 // Draws the title screen for the game
 void drawTitleScreen(void);
 
+// Draws title message
+void drawTitleMessage(void);
+
 // Draws the background for the actual gameplay
 void drawGameBackground(void);
 

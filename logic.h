@@ -12,7 +12,7 @@
 #define MAX_BULLET 8 // max amount of bullets allowed at a time
 #define BULLET_SPAWN_Y 40 // initial height of bullet spawn
 #define BULLET_SPAWN_REL 20 // relative y distance from boss center for the first bullet
-#define BULLET_SPAWN_GAP 10 // gap size between bullet spawn locations
+#define BULLET_SPAWN_GAP 8 // gap size between bullet spawn locations
 #define BOSS_SPAWN_X 120 // initial x location of boss spawn
 #define BOSS_SPAWN_Y 8 // initial y location of boss spawn
 typedef struct player {

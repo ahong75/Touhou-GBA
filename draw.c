@@ -12,6 +12,12 @@ void drawTitleScreen(void) {
 	drawFullScreenImageDMA(title);
 }
 
+void drawTitleMessage(void) {
+	char message1[] = "PRESS ANY KEY";
+	char message2[] = "TO START";
+	drawString(HEIGHT / 4, WIDTH / 14, message1, WHITE);
+	drawString(HEIGHT / 4 + 20, WIDTH / 14, message2, WHITE);
+}
 void drawGameBackground(void) {
 	fillScreenDMA(BLUE);
 	return;

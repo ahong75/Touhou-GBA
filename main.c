@@ -6,13 +6,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-
+// TODO: Win case 
 enum gba_state {
   START,
   TITLE,
   INIT_PLAY,
   PLAY,
-  WIN,
+  // WIN,
   LOSE,
 };
 
@@ -43,6 +43,7 @@ int main(void) {
         break;
       case TITLE:
         // if press anykey -> go to PLAY
+        drawTitleMessage();
         if (KEY_JUST_PRESSED(ANY_KEY, currentButtons, previousButtons)) {
           state = INIT_PLAY;
         }
@@ -77,9 +78,8 @@ int main(void) {
           state = LOSE;
         }
         break;
-      case WIN:
-
-        break;
+      // case WIN:
+      //   break;
       case LOSE:
         // TODO: if player presses start -> retry (go back to init_play)
         loseScreen();
