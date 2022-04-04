@@ -7,7 +7,7 @@ void drawTitleScreen(void);
 void drawGameBackground(void);
 
 // Draws the lose screen after the player dies
-void drawLoseScreen(void);
+void drawLoseScreen(long long score);
 
 // Updates the number shown on the screen representing score
 void updateScore(void);

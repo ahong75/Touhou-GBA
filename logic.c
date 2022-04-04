@@ -94,6 +94,11 @@ void updateScore(void) {
 	drawScore(score);
 }
 
+void loseScreen(void) {
+	drawLoseScreen(score);
+	score = 0;
+}
+
 // Spaghetti code for bullet logic and spawning
 void initBullets(void) {
 	bulletCount = 0;

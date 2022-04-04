@@ -17,10 +17,18 @@ void drawGameBackground(void) {
 	return;
 }
 
-void drawLoseScreen(void) {
-	drawFullScreenImageDMA(lose);
-	// TODO: Implement this
-	return;
+void drawLoseScreen(long long score) {
+	if (score != 0) {
+		drawFullScreenImageDMA(lose);
+		char message1[] = "YOU GOT HIT!";			
+		char message2[] = "FINAL SCORE: ";
+		char fscore[256];
+		sprintf(fscore, "%lld", score);
+		drawString(HEIGHT / 2 - 20, WIDTH / 2 - 40, message1, WHITE);
+		drawString(HEIGHT / 2, WIDTH / 2 - 40, message2, WHITE);
+		drawCenteredString(HEIGHT / 2 + 20, WIDTH / 2 - 30, 40, 10, fscore, WHITE);
+		return;	
+	}
 }
 
 int updatePlayer(int nrow, int ncol, int orow, int ocol) {

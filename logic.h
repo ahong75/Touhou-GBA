@@ -44,6 +44,8 @@ void initBullets(void);
 void moveSprites(void);
 void updateBulletSpawn(void);
 void updateScore(void);
+void loseScreen(void);
 int updateBullets(void); // Initalizes and moves bullets
+
 
 #endif

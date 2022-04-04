@@ -82,7 +82,7 @@ int main(void) {
         break;
       case LOSE:
         // TODO: if player presses start -> retry (go back to init_play)
-        drawLoseScreen();
+        loseScreen();
         break;
     }
 
