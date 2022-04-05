@@ -41,8 +41,6 @@ void drawLoseScreen(long long score) {
 void drawWinMessage(void) {
 	char message1[] = "CONGRATULATIONS!";
 	char message2[] = "YOU SAVED THE UNIVERSE!";
-	// drawString(HEIGHT / 2 - 20, WIDTH / 2 - 40, message1, WHITE);
-	// drawString(HEIGHT / 2, WIDTH / 2 - 40, message2, WHITE);
 	drawCenteredString(HEIGHT / 2 - 20, WIDTH / 2 - 20, 40, 10, message1, WHITE);
 	drawCenteredString(HEIGHT / 2, WIDTH / 2 - 20, 40, 10, message2, WHITE);
 }
@@ -54,7 +52,7 @@ void updatePlayer(int nrow, int ncol, int orow, int ocol) {
 	drawImageDMA(nrow, ncol, PWIDTH, PHEIGHT, player);
 }
 
-// There's some bug where the boss leaves a couple pixels behind
+// There's some bug where the boss leaves a couple pixels behind but apparently it's ok to ignore
 void updateBoss(int nrow, int ncol, int orow, int ocol) {
 	if (orow != -1) {
 		drawRectDMA(orow, ocol, BWIDTH + 1, BHEIGHT + 1, BLUE);

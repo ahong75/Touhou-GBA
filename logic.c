@@ -54,10 +54,10 @@ void moveSprites(void) {
 		player1.x = (player1.x + player1.velocity) % WIDTH;
 	}
 	if (KEY_DOWN(BUTTON_UP, BUTTONS)) {
-		player1.y = NEGMOD(player1.y, player1.velocity, HEIGHT);
+		player1.y = MAX(BHEIGHT + 10, player1.y - player1.velocity);
 	}
 	if (KEY_DOWN(BUTTON_DOWN, BUTTONS)) {
-		player1.y = (player1.y + player1.velocity) % HEIGHT;
+		player1.y = MIN(HEIGHT - 5, player1.y + player1.velocity);
 	}
 	updatePlayer(player1.x, player1.y, oldx, oldy);
 	player1.center = (player1.x + PWIDTH / 2) % WIDTH;
@@ -99,13 +99,16 @@ void updateLasers(void) {
 			if (lasers[i].exist) {
 				int oldx = lasers[i].x;
 				int oldy = lasers[i].y;
+				// making bullets near the edge of the screen disappear
 				if (lasers[i].y < 5) {
 					lasers[i].exist = 0;
 					updateLaser(-1, -1, oldx, oldy);
 				}
 				else {
+					// updating moving lasers
 					lasers[i].y = lasers[i].y - lasers[i].velocity;
 					updateLaser(lasers[i].x, lasers[i].y, oldx, oldy);
+					// checking for laser-boss collision
 					if (boss1.x <= lasers[i].x &&
 						lasers[i].x < boss1.x + BWIDTH &&
 						lasers[i].y < boss1.y + BHEIGHT) {
@@ -118,6 +121,7 @@ void updateLasers(void) {
 					}
 				}
 			}
+			// launching new lasers
 			if (update == 1 && lasers[i].exist == 0 && KEY_DOWN(BUTTON_A, BUTTONS)) {
 				lasers[i].exist = 1;
 				lasers[i].x = player1.center - 1;
@@ -223,6 +227,7 @@ int updateBullets(void) {
 					bullets[i].homing = 0;
 					bullets[i].y = BULLET_SPAWN_Y;
 					bullets[i].velocity = 1;
+					// bullet mode 2 -> straight drop bullets
 					if (create == 2) {
 						bullets[i].exist = 1;
 						bullets[i].x = bulletSpawn[MAX_BULLET / 2];
@@ -230,6 +235,8 @@ int updateBullets(void) {
 						updateBullet(bullets[i].x, bullets[i].y, -1, -1);
 						break;
 					}
+					// bullet mode 1 -> random speed bullets
+					// bullet mode 3 -> homing bullets
 					if (create == 1 || create == 3) {
 						int spawn = randint(0, 2);
 						if (spawn) {

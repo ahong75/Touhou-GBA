@@ -48,7 +48,7 @@ int main(void) {
           state = INIT_PLAY;
         }
         break;
-      case INIT_PLAY: // we have these init states to prevent tearing
+      case INIT_PLAY: // we have these init states to prevent having to rewrite static images
         // Set up play screen and then go to PLAY
         waitForVBlank();
         drawGameBackground();
@@ -86,7 +86,6 @@ int main(void) {
     previousButtons = currentButtons; // Store the current state of the buttons
   }
 
-  UNUSED(previousButtons); // You can remove this once previousButtons is used
 
   return 0;
 }
